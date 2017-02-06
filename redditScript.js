@@ -11,14 +11,33 @@ function handleResponse(response) {
   for (var i = 0; i < responsePosts.length; i++) {
     posts[i] = responsePosts[i].data;
   }
-posts.forEach((posts) => {
-posts.hasThumbnail = posts.thumbnail !== "self";
-});
+  posts.forEach((posts) => {
+  posts.hasThumbnail = posts.thumbnail !== "self";
+  });
 
-posts.forEach((posts) => {
-posts.hasSelfText = posts.selftext !== "";
-});
+  posts.forEach((posts) => {
+  posts.hasSelfText = posts.selftext !== "";
+  });
   renderPosts(posts);
+}
+
+function handleJokeResponse(response) {
+  var responsePosts = response.data.children;
+  var posts = [];
+  for (var i = 0; i < responsePosts.length; i++) {
+    posts[i] = responsePosts[i].data;
+  }
+  posts.forEach((posts) => {
+  posts.hasThumbnail = posts.thumbnail !== "self";
+  });
+
+  posts.forEach((posts) => {
+  posts.hasSelfText = posts.selftext !== "";
+  });
+
+  var randomDadJoke = [posts[(Math.floor(Math.random() * i))]];
+
+  renderPosts(randomDadJoke);
 }
 
 function getTemplate(name) {
@@ -32,7 +51,7 @@ function getPosts() {
 
 function getDadJokes() {
   var subreddit = $('#subreddit').val();
-  $.getJSON('https://www.reddit.com/r/dadjokes/top.json?sort=top&t=day').done(handleResponse);
+  $.getJSON('https://www.reddit.com/r/dadjokes/top.json?sort=top&t=day').done(handleJokeResponse);
 }
 
 $(function () {
