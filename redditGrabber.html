@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Reddit Grabber</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js">
+  </script>
+  <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+  <script src="redditScript.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+  
+  <script id="post-template" type="text/x-handlebars-template">
+  <ul>
+  {{#each posts}}
+    <li>{{ title }}</li>
+    {{#if hasSelfText}}
+      <ul>
+        <li>{{ selftext }}</li>
+      </ul>
+    {{/if}}
+    {{#if hasThumbnail}}
+      <img src="{{ thumbnail }}"/>
+    {{/if}}
+    <br/>
+  {{/each}}
+  </ul>
+  </script>
+</head>
+<body>
+  <h1>Top posts in the past 24 hours</h1>
+  <input type="text" placeholder="Enter Subreddit Name" id="subreddit">
+  <button type="button" id="subButton">Show me this sub</button>
+  <button type="button" id="dadJokes">Show me the funny!</button>
+  <div class="posts">
+  </div>
+</body>
+</html>
