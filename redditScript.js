@@ -5,19 +5,20 @@ function renderPosts(posts) {
   $('.posts').html(html);
 }
 
-function handleResponse(response) {
-  var responsePosts = response.data.children;
-  var posts = [];
-  for (var i = 0; i < responsePosts.length; i++) {
-    posts[i] = responsePosts[i].data;
-  }
-  posts.forEach((posts) => {
-  posts.hasThumbnail = posts.thumbnail !== "self";
-  });
+function renderException(exceptionPost) {
+  var templateSource = getTemplate('exception-template');
+  var template = Handlebars.compile(templateSource);
+  var html = template({ exceptionPost });
+  $('.posts').html(html);
+}
 
-  posts.forEach((posts) => {
-  posts.hasSelfText = posts.selftext !== "";
-  });
+function handleResponse(response) {
+  var posts = response.data.children.map((postData) => {
+    var post = postData.data;
+    post.hasThumbnail = post.thumbnail !== "self";
+    post.hasSelfText = post.selftext !== "";
+    return post;
+  })
   renderPosts(posts);
 }
 
@@ -28,16 +29,21 @@ function handleJokeResponse(response) {
     posts[i] = responsePosts[i].data;
   }
   posts.forEach((posts) => {
-  posts.hasThumbnail = posts.thumbnail !== "self";
+    posts.hasThumbnail = posts.thumbnail !== "self";
   });
 
   posts.forEach((posts) => {
-  posts.hasSelfText = posts.selftext !== "";
+    posts.hasSelfText = posts.selftext !== "";
   });
 
   var randomDadJoke = [posts[(Math.floor(Math.random() * i))]];
 
   renderPosts(randomDadJoke);
+}
+
+function handleException() {
+  var exceptionMessage = [{message:"Not a real SubReddit!"}];
+  renderException(exceptionMessage);
 }
 
 function getTemplate(name) {
@@ -46,7 +52,7 @@ function getTemplate(name) {
 
 function getPosts() {
   var subreddit = $('#subreddit').val();
-  $.getJSON('https://www.reddit.com/r/' + subreddit + '/top.json?sort=top&t=day').done(handleResponse);
+  $.getJSON('https://www.reddit.com/r/' + subreddit + '/top.json?sort=top&t=day').done(handleResponse).fail(handleException);
 }
 
 function getDadJokes() {
