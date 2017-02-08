@@ -15,21 +15,30 @@
   </style>
   
   <script id="post-template" type="text/x-handlebars-template">
-  <ul>
-  {{#each posts}}
-    <li>{{ title }}</li>
-    {{#if hasSelfText}}
-      <ul>
-        <li>{{ selftext }}</li>
-      </ul>
-    {{/if}}
-    {{#if hasThumbnail}}
-      <img src="{{ thumbnail }}"/>
-    {{/if}}
-    <br/>
-  {{/each}}
-  </ul>
+    <ul>
+    {{#each posts}}
+      {{#if title}}
+        <li>{{ title }}</li>
+      {{/if}}
+      {{#if hasSelfText}}
+        <ul>
+          <li>{{ selftext }}</li>
+        </ul>
+      {{/if}}
+      {{#if hasThumbnail}}
+        <img src="{{ thumbnail }}"/>
+      {{/if}}
+      <br/> 
+    {{/each}}
+    </ul>
   </script>
+
+  <script id="exception-template" type="text/x-handlebars-template">
+    {{#each exceptionPost}}
+    <h2>{{message}}</h2>
+    {{/each}}
+  </script>
+
 </head>
 <body>
   <h1>Top posts in the past 24 hours</h1>
