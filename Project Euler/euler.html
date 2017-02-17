@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Project Euler</title>
+	<meta name="description" content="A page for various Project Euler problems">
+	<meta name="author" content="Sameish">
+	<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+	<script src="Problem 2/eulerScript.js"></script> <!--Change the number here to render different problems-->
+	<style>
+	    body {
+	      font-family: sans-serif;
+	    }
+	    .hidden {
+	    	display:none;
+	    }
+  	</style>
+</head>
+<body>
+	<h1>Project Euler</h1>
+	<div>
+		<h3>Please enter your value</h3>
+		<input type="number" placeholder="Input value here" id="inputBox">
+		<button type="button" id="submitButton">Show me potato salad!</button>	
+	</div>
+	<div id="answerDiv" class="hidden">
+		<br>The answer is:
+		<span id="output"></span>
+	</div>
+</body>
+</html>
