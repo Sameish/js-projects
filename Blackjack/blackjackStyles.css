@@ -1,0 +1,19 @@
+/*#title {
+
+}
+*/
+
+#reset {
+	float: right;
+	padding-right: 100px;
+}
+
+html, body {
+	font-family: sans-serif;
+    text-align: center;
+}
+
+.hidden {
+	visibility: hidden;
+	display: none;
+}
