@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+		<link rel="stylesheet" href="blackjackStyles.css" type="text/css"></link>
+		<title>BlackJack</title>
+
+	</head>
+	<body>
+		<h1 id="title">Let's Play BlackJack!</h1>
+
+		<div id="playername">
+			<input  type="text"	placeholder="What is your name?" id="playerNameInput">
+			<button type="button" id="playerNameButton"> Submit	</button>
+		</div>
+
+		<div id="gameArea" class="hidden">
+			<div id="cardSelection">
+			</div>
+			<br>
+			<button type="button" id="hitButton"> Hit! </button>
+			<button type="button" id="stickButton"> Stick! </button>
+		</div>
+
+		<div id="reset">
+			<button type="button" id="resetButton" onclick="window.location.reload()"> Reset! </button>
+		</div>
+
+		<script src="blackjackScript.js"></script>
+	</body>
+</html>
