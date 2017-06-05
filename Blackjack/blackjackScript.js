@@ -37,10 +37,10 @@ function newGame() {
 
 //this calculates the score of each of the cards, accounting for ace being 1 or 0 (but not dynamically, only on generation)
 function calculateScore(card, score) {
-	if (card.number >=1 && card.number < 11) {
-		cardValue = card.number;
+	if (card.number >=1 && card.number < 10) {
+		cardValue = card.number + 1;
 
-	} else if (card.number >= 11 && card.number < 14) {
+	} else if (card.number >= 10 && card.number < 13) {
 		cardValue = 10;
 
 	} else if (card.number == 0 && score <= 10) {
@@ -61,7 +61,7 @@ function updateScore() {
 //this function draws a new card, prints it to the user, and calculates the users new score
 function chooseCard() {
 	dealtCard = newDeck[Math.floor((Math.random()*newDeck.length))];
-	document.getElementById("cardSelection").innerHTML = ("You draw the " + dealtCard.number + " of " + dealtCard.suit);
+	document.getElementById("cardSelection").innerHTML = ("You draw the " + cards[dealtCard.number] + " of " + dealtCard.suit);
 	playerScore = calculateScore(dealtCard, playerScore);
 	updateScore();
 
@@ -74,7 +74,7 @@ function chooseCard() {
 //I guess this should all be in a loop and only called when the stick button is pressed, with all the logic for win/lose too.
 function choosePcCard() {
 	dealtCard = newDeck[Math.floor((Math.random()*newDeck.length))];
-	document.getElementById("cardSelection").innerHTML = ("The computer's card is the " + dealtCard.number + " of " + dealtCard.suit);
+	document.getElementById("cardSelection").innerHTML = ("The computer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
 	calculateScore(dealtCard, computerScore);
 }
 
@@ -86,8 +86,8 @@ function firstCards() {
 	startCard1 = newDeck[Math.floor((Math.random()*newDeck.length))];
 	startCard2 = newDeck[Math.floor((Math.random()*newDeck.length))];
 
-	document.getElementById("cardSelection").innerHTML = ("Your cards are the " + startCard1.number + " of " + startCard1.suit
-															+ " and the " + startCard2.number + " of " + startCard2.suit);
+	document.getElementById("cardSelection").innerHTML = ("Your cards are the " + cards[startCard1.number] + " of " + startCard1.suit
+								+ " and the " + cards[startCard2.number] + " of " + startCard2.suit);
 	playerScore = calculateScore(startCard1, playerScore);
 	playerScore = calculateScore(startCard2, playerScore);
 	updateScore();
