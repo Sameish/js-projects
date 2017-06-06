@@ -10,6 +10,10 @@ var deck = [];
 var newDeck;
 var dealtCard;
 
+function logObject(obj) {
+	console.log(JSON.stringify(obj, null, 2));
+}
+
 //these two bits build up the deck of 52 cards, in order. Only done once per page refresh
 suits.forEach(buildDeck);
 function buildDeck(suit) {
