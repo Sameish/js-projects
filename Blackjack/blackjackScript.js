@@ -1,14 +1,15 @@
 var playerName;
 var playerScore = 0;
-var computerScore = 0;
+var dealerScore = 0;
 var cards = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"];
 var suits = ["Diamonds", "Spades", "Hearts", "Clubs"];
-var choice;
 var startCard1;
 var startCard2;
 var deck = [];
 var newDeck;
 var dealtCard;
+var usersHand = [];
+var dealersHand = [];
 
 function logObject(obj) {
 	console.log(JSON.stringify(obj, null, 2));
@@ -59,7 +60,7 @@ function calculateScore(card, score) {
 
 //this function just updates the score text displayed in the ui
 function updateScore() {
-	document.getElementById("scoreArea").innerHTML = ("Your score is currently: " + playerScore + '<br />' + "The computer's score is currently: " + computerScore);
+	document.getElementById("scoreArea").innerHTML = ("Your score is currently: " + playerScore + '<br />' + "The dealer's score is currently: " + dealerScore);
 }
 
 //this function draws a new card, prints it to the user, and calculates the users new score
@@ -74,18 +75,18 @@ function chooseCard() {
 	}
 }
 
-//this is the function for the PC card drawing. Need to add logic as to when the PC will auto hit and auto stick. 
+//this is the function for the dealer card drawing. Need to add logic as to when the dealer will auto hit and auto stick. 
 //I guess this should all be in a loop and only called when the stick button is pressed, with all the logic for win/lose too.
-function choosePcCard() {
+function chooseDealerCard() {
 	dealtCard = newDeck.pop();
-	document.getElementById("cardSelection").innerHTML = ("The computer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
-	calculateScore(dealtCard, computerScore);
+	document.getElementById("cardSelection").innerHTML = ("The dealer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
+	calculateScore(dealtCard, dealerScore);
 }
 
 
 //this function draws the first 2 cards of the game for the player, prints it to the ui, calculates the score and if blackjack, you win. 
 //Need to add the bust/game over/victory function.
-//need to either make this generic so it also handles the PC first cards, or create a new function for the PCs first cards (or edit choosePcCard)
+//need to either make this generic so it also handles the dealer's first cards, or create a new function for the dealer's first cards (or edit chooseDealerCard)
 function firstCards() {
 	startCard1 = newDeck.pop();
 	startCard2 = newDeck.pop();
@@ -127,7 +128,7 @@ $(function () {
 });
 
 // $(function () {
-// 	$('#stickButton').on('click', startPCGo);
+// 	$('#stickButton').on('click', startDealerGo);
 // });
 
 // $(function () {
