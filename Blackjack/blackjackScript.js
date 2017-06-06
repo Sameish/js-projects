@@ -77,7 +77,7 @@ function chooseCard() {
 //this is the function for the PC card drawing. Need to add logic as to when the PC will auto hit and auto stick. 
 //I guess this should all be in a loop and only called when the stick button is pressed, with all the logic for win/lose too.
 function choosePcCard() {
-	dealtCard = newDeck[Math.floor((Math.random()*newDeck.length))];
+	dealtCard = newDeck.pop();
 	document.getElementById("cardSelection").innerHTML = ("The computer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
 	calculateScore(dealtCard, computerScore);
 }
@@ -87,9 +87,8 @@ function choosePcCard() {
 //Need to add the bust/game over/victory function.
 //need to either make this generic so it also handles the PC first cards, or create a new function for the PCs first cards (or edit choosePcCard)
 function firstCards() {
-	startCard1 = newDeck[Math.floor((Math.random()*newDeck.length))];
-	startCard2 = newDeck[Math.floor((Math.random()*newDeck.length))];
-
+	startCard1 = newDeck.pop();
+	startCard2 = newDeck.pop();
 	document.getElementById("cardSelection").innerHTML = ("Your cards are the " + cards[startCard1.number] + " of " + startCard1.suit
 								+ " and the " + cards[startCard2.number] + " of " + startCard2.suit);
 	playerScore = calculateScore(startCard1, playerScore);
