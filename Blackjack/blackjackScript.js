@@ -60,7 +60,7 @@ function updateScore() {
 
 //this function draws a new card, prints it to the user, and calculates the users new score
 function chooseCard() {
-	dealtCard = newDeck[Math.floor((Math.random()*newDeck.length))];
+	dealtCard = newDeck.pop();
 	document.getElementById("cardSelection").innerHTML = ("You draw the " + cards[dealtCard.number] + " of " + dealtCard.suit);
 	playerScore = calculateScore(dealtCard, playerScore);
 	updateScore();
