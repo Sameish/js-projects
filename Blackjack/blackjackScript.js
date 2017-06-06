@@ -8,8 +8,8 @@ var startCard2;
 var deck = [];
 var newDeck;
 var dealtCard;
-var usersHand = [];
-var dealersHand = [];
+var playerHand = [];
+var dealerHand = [];
 
 function logObject(obj) {
 	console.log(JSON.stringify(obj, null, 2));
@@ -38,6 +38,10 @@ function newGame() {
 	    }
 	    return array;
 	}
+	playerHand.length = 0;
+	dealerHand.length = 0; 
+	playerScore = 0;
+	dealerScore = 0;
 }
 
 //this calculates the score of each of the cards, accounting for ace being 1 or 0 (but not dynamically, only on generation)
@@ -60,13 +64,14 @@ function calculateScore(card, score) {
 
 //this function just updates the score text displayed in the ui
 function updateScore() {
-	document.getElementById("scoreArea").innerHTML = ("Your score is currently: " + playerScore + '<br />' + "The dealer's score is currently: " + dealerScore);
+	document.getElementById("score-area").innerHTML = ("Your score is currently: " + playerScore + '<br />' + "The dealer's score is currently: " + dealerScore);
 }
 
 //this function draws a new card, prints it to the user, and calculates the users new score
 function chooseCard() {
 	dealtCard = newDeck.pop();
-	document.getElementById("cardSelection").innerHTML = ("You draw the " + cards[dealtCard.number] + " of " + dealtCard.suit);
+	playerHand.push(dealtCard);
+	document.getElementById("card-selection").innerHTML = ("You draw the " + cards[dealtCard.number] + " of " + dealtCard.suit);
 	playerScore = calculateScore(dealtCard, playerScore);
 	updateScore();
 
@@ -75,12 +80,20 @@ function chooseCard() {
 	}
 }
 
+
+function dealerTurn() {
+	document.getElementById("game-buttons").classList.add('hidden');
+	chooseDealerCard();
 //this is the function for the dealer card drawing. Need to add logic as to when the dealer will auto hit and auto stick. 
 //I guess this should all be in a loop and only called when the stick button is pressed, with all the logic for win/lose too.
-function chooseDealerCard() {
-	dealtCard = newDeck.pop();
-	document.getElementById("cardSelection").innerHTML = ("The dealer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
-	calculateScore(dealtCard, dealerScore);
+//need to add the "first cards" bit in here, at the moment, dealer only starts with 1 card and then ends.
+	function chooseDealerCard() {
+		dealtCard = newDeck.pop();
+		dealerHand.push(dealtCard);
+		document.getElementById("card-selection").innerHTML = ("The dealer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
+		dealerScore = calculateScore(dealtCard, dealerScore);
+		updateScore();
+	}
 }
 
 
@@ -90,7 +103,8 @@ function chooseDealerCard() {
 function firstCards() {
 	startCard1 = newDeck.pop();
 	startCard2 = newDeck.pop();
-	document.getElementById("cardSelection").innerHTML = ("Your cards are the " + cards[startCard1.number] + " of " + startCard1.suit
+	playerHand.push(startCard1, startCard2);
+	document.getElementById("card-selection").innerHTML = ("Your cards are the " + cards[startCard1.number] + " of " + startCard1.suit
 								+ " and the " + cards[startCard2.number] + " of " + startCard2.suit);
 	playerScore = calculateScore(startCard1, playerScore);
 	playerScore = calculateScore(startCard2, playerScore);
@@ -103,10 +117,10 @@ function firstCards() {
 //this is just a bit of fancy fun to put the player's name in the game. It also acts as a start to the game
 function setName() {
 	playerName = $('#playerNameInput').val()
-	document.getElementById("playername").classList.add('hidden');
+	document.getElementById("player-name").classList.add('hidden');
 	document.getElementById("title").innerHTML = "Let's Play BlackJack, " + playerName + "!";
 	newGame();
-	document.getElementById("gameArea").classList.remove('hidden');
+	document.getElementById("game-area").classList.remove('hidden');
 	firstCards();
 }
 
@@ -127,9 +141,9 @@ $(function () {
 	$('#hitButton').on('click', chooseCard);
 });
 
-// $(function () {
-// 	$('#stickButton').on('click', startDealerGo);
-// });
+$(function () {
+	$('#stickButton').on('click', dealerTurn);
+});
 
 // $(function () {
 // 	$('#resetButton').on('click', resetGame);
