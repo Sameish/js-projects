@@ -181,5 +181,5 @@ $(function () {
 });
 
 $(function () {
-	$('#resetButton').on('click', newGame);
+	$('#newGameButton').on('click', newGame);
 });
