@@ -3,11 +3,8 @@ var playerScore = 0;
 var dealerScore = 0;
 var cards = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"];
 var suits = ["Diamonds", "Spades", "Hearts", "Clubs"];
-var startCard1;
-var startCard2;
 var deck = [];
 var newDeck;
-var dealtCard;
 var playerHand = [];
 var dealerHand = [];
 
@@ -42,6 +39,14 @@ function newGame() {
 	dealerHand.length = 0; 
 	playerScore = 0;
 	dealerScore = 0;
+
+	var startingHand = firstCards(playerHand, playerScore);
+	renderStartCards("Your cards are", startingHand.firstcard, startingHand.secondcard);
+	playerScore = startingHand.score;
+	updateScore();
+	if (playerScore == 21) {
+		alert("BlackJack! You win!");
+	}
 }
 
 //this calculates the score of each of the cards, accounting for ace being 1 or 0 (but not dynamically, only on generation)
@@ -69,48 +74,75 @@ function updateScore() {
 
 //this function draws a new card, prints it to the user, and calculates the users new score
 function chooseCard() {
-	dealtCard = newDeck.pop();
-	playerHand.push(dealtCard);
-	document.getElementById("card-selection").innerHTML = ("You draw the " + cards[dealtCard.number] + " of " + dealtCard.suit);
-	playerScore = calculateScore(dealtCard, playerScore);
+	var deal = drawCard(playerHand, playerScore);
+	playerScore = deal.score;
 	updateScore();
-
+	renderCard("Your card is", deal.card);
 	if (playerScore > 21) { //if the new card causes the player to bust, this happens. Need to add a bust/game over/victory function
 		alert("You went bust! Unlucky!");
 	}
 }
 
-
-function dealerTurn() {
-	document.getElementById("game-buttons").classList.add('hidden');
-	chooseDealerCard();
 //this is the function for the dealer card drawing. Need to add logic as to when the dealer will auto hit and auto stick. 
 //I guess this should all be in a loop and only called when the stick button is pressed, with all the logic for win/lose too.
 //need to add the "first cards" bit in here, at the moment, dealer only starts with 1 card and then ends.
-	function chooseDealerCard() {
-		dealtCard = newDeck.pop();
-		dealerHand.push(dealtCard);
-		document.getElementById("card-selection").innerHTML = ("The dealer's card is the " + cards[dealtCard.number] + " of " + dealtCard.suit);
-		dealerScore = calculateScore(dealtCard, dealerScore);
-		updateScore();
+function dealerTurn() {
+	document.getElementById("game-buttons").classList.add('hidden');
+	var dealerFirstHand = firstCards(dealerHand, dealerScore);
+	renderStartCards("The dealer's cards are", dealerFirstHand.firstcard, dealerFirstHand.secondcard);
+	dealerScore = dealerFirstHand.score;
+	updateScore();
+
+	while (dealerScore <= 21) {
+		if (dealerScore < 17) {
+			var deal = drawCard(dealerHand, dealerScore);
+			dealerScore = deal.score;
+			updateScore();
+			renderCard("The dealer's card is", deal.card);
+		} else if (dealerScore >= 17 && dealerScore <= 21) {
+			return alert("dealer sticks")
+			
+		} else if (dealerScore > 21) {
+			return alert("dealer is bust");
+		}
 	}
+}	
+
+function drawCard(hand, score) {
+	var dealtCard = newDeck.pop();
+	hand.push(dealtCard);
+	var newScore = calculateScore(dealtCard, score);
+	return {
+		score: newScore,
+		card: dealtCard,
+	}
+}
+
+
+function renderCard(prefix, card) {
+	document.getElementById("card-selection").innerHTML = (prefix + " the " + cards[card.number] + " of " + card.suit);
+}
+
+function renderStartCards(prefix, firstcard, secondcard) {
+	document.getElementById("card-selection").innerHTML = (prefix + " the " + cards[firstcard.number] + " of " + firstcard.suit
+							+ " and the " + cards[secondcard.number] + " of " + secondcard.suit);
 }
 
 
 //this function draws the first 2 cards of the game for the player, prints it to the ui, calculates the score and if blackjack, you win. 
 //Need to add the bust/game over/victory function.
 //need to either make this generic so it also handles the dealer's first cards, or create a new function for the dealer's first cards (or edit chooseDealerCard)
-function firstCards() {
-	startCard1 = newDeck.pop();
-	startCard2 = newDeck.pop();
-	playerHand.push(startCard1, startCard2);
-	document.getElementById("card-selection").innerHTML = ("Your cards are the " + cards[startCard1.number] + " of " + startCard1.suit
-								+ " and the " + cards[startCard2.number] + " of " + startCard2.suit);
-	playerScore = calculateScore(startCard1, playerScore);
-	playerScore = calculateScore(startCard2, playerScore);
-	updateScore();
-	if (playerScore == 21) {
-		alert("BlackJack! You win!");
+function firstCards(hand, score) {
+	var startCard1 = newDeck.pop();
+	var startCard2 = newDeck.pop();
+	hand.push(startCard1, startCard2);
+	var newScore = calculateScore(startCard1, score);
+	newScore = calculateScore(startCard2, newScore);
+
+	return {
+		score: newScore,
+		firstcard: startCard1,
+		secondcard: startCard2,
 	}
 }
 
@@ -121,7 +153,6 @@ function setName() {
 	document.getElementById("title").innerHTML = "Let's Play BlackJack, " + playerName + "!";
 	newGame();
 	document.getElementById("game-area").classList.remove('hidden');
-	firstCards();
 }
 
 //clicking the set name button starts the game
