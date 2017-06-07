@@ -40,6 +40,9 @@ function newGame() {
 	playerScore = 0;
 	dealerScore = 0;
 
+	document.getElementById("game-buttons").classList.remove('hidden');
+	document.getElementById("card-selection").innerHTML = ("");
+
 	var startingHand = firstCards(playerHand, playerScore);
 	renderStartCards("Your cards are", startingHand.firstcard, startingHand.secondcard);
 	playerScore = startingHand.score;
@@ -152,8 +155,8 @@ function setName() {
 	playerName = $('#playerNameInput').val()
 	document.getElementById("player-name").classList.add('hidden');
 	document.getElementById("title").innerHTML = "Let's Play BlackJack, " + playerName + "!";
-	newGame();
 	document.getElementById("game-area").classList.remove('hidden');
+	newGame();
 }
 
 //clicking the set name button starts the game
@@ -177,6 +180,6 @@ $(function () {
 	$('#stickButton').on('click', dealerTurn);
 });
 
-// $(function () {
-// 	$('#resetButton').on('click', resetGame);
-// });
+$(function () {
+	$('#resetButton').on('click', newGame);
+});
