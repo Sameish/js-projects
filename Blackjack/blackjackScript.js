@@ -101,10 +101,11 @@ function dealerTurn() {
 			renderCard("The dealer's card is", deal.card);
 		} else if (dealerScore >= 17 && dealerScore <= 21) {
 			return alert("dealer sticks")
-			
-		} else if (dealerScore > 21) {
-			return alert("dealer is bust");
-		}
+		} 
+	}
+
+	if (dealerScore > 21) {
+		return alert("dealer is bust");
 	}
 }	
 
@@ -120,12 +121,12 @@ function drawCard(hand, score) {
 
 
 function renderCard(prefix, card) {
-	document.getElementById("card-selection").innerHTML = (prefix + " the " + cards[card.number] + " of " + card.suit);
+	document.getElementById("card-selection").innerHTML += (prefix + " the " + cards[card.number] + " of " + card.suit + '<br />');
 }
 
 function renderStartCards(prefix, firstcard, secondcard) {
-	document.getElementById("card-selection").innerHTML = (prefix + " the " + cards[firstcard.number] + " of " + firstcard.suit
-							+ " and the " + cards[secondcard.number] + " of " + secondcard.suit);
+	document.getElementById("card-selection").innerHTML += ('<br />' + prefix + " the " + cards[firstcard.number] + " of " + firstcard.suit
+							+ " and the " + cards[secondcard.number] + " of " + secondcard.suit + '<br />');
 }
 
 
