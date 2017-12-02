@@ -12,12 +12,12 @@ for (var j = 0, newLen = output.length; j <= newLen; j += 1)
 	if (j != newLen)
 	{
 		if (output[j] == output[j+1])
-			sum += parseInt(output[j]);
+			sum += output[j];
 	}
 	else 
 	{
 		if (output[j-1] == output[0])
-			sum += parseInt(output[j-1]);
+			sum += output[j-1];
 	}
 }
 
