@@ -125,6 +125,29 @@ var euler = {
 			question: "By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13. \n\
 \						What is the 10,001st prime number?",
 
+			solve: function(num) {
+						var primes = [2,3,5,7,11,13];
+						console.log("Calculating Prime Numbers....");
+						var start = Date.now()
+						for (i=15; i > 0;i+=2) {
+							if (primes[num-1] == undefined) {
+								var isPrime = true;
+								var b = Math.ceil(Math.sqrt(i));
+								for (j=0; primes[j] <= b; j++) {
+									if (i % primes[j] === 0) { 
+										isPrime = false; 
+										break; 
+									} 
+								}		
+								if (isPrime) { 
+									primes.push(i);
+								}
+							}
+							else {
+								return primes[num-1];
+							}	
+						}
+					}
 		},
 
 		problem8: {
@@ -173,10 +196,10 @@ var euler = {
 
 		problem50: {
 			question: "The prime 41, can be written as the sum of six consecutive primes: \n\
-						41 = 2 + 3 + 5 + 7 + 11 + 13 \n\
-						This is the longest sum of consecutive primes that adds to a prime below one-hundred. \n\
-						The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953. \n\
-						Which prime, below one-million, can be written as the sum of the most consecutive primes?",
+\						41 = 2 + 3 + 5 + 7 + 11 + 13 \n\
+\						This is the longest sum of consecutive primes that adds to a prime below one-hundred. \n\
+\						The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953. \n\
+\						Which prime, below one-million, can be written as the sum of the most consecutive primes?",
 
 			solve : function (num) {
 						var primes = [2,3,5,7,11,13];
