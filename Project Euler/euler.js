@@ -144,4 +144,67 @@ var euler = {
 					If 1000 is divisble exactly by the sum of the primitive primes, then the answer is the product of the primitive primes with the result of that division "
 
 		},
+
+		problem50: {
+			question: "The prime 41, can be written as the sum of six consecutive primes: \n\
+						41 = 2 + 3 + 5 + 7 + 11 + 13 \n\
+						This is the longest sum of consecutive primes that adds to a prime below one-hundred. \n\
+						The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953. \n\
+						Which prime, below one-million, can be written as the sum of the most consecutive primes?",
+
+			solve : function (num) {
+						var primes = [2,3,5,7,11,13];
+						var range = num;
+						
+						console.log("Calculating Prime Numbers....");
+						var start = Date.now()
+						for (i=15;i<num;i+=2) {
+							var isPrime = true;
+							var b = Math.ceil(Math.sqrt(i));
+							for (j=0; primes[j] <= b; j++) {
+								if (i % primes[j] === 0) { 
+									isPrime = false; 
+									break; 
+								} 
+							}		
+							if (isPrime) { primes.push(i); }	
+						}
+						console.log("Finished Calculating Prime Numbers");
+										
+						var answerLength = 0;
+						var answerNumber = 0;
+						for (j=primes.length-1; j>=0; j--) {
+							
+							var halfJ = primes[j]/2;
+							var index = 0;
+							for (m=0; m < j; m++) {
+								if (primes[m] > halfJ) {
+									index = m;
+									break;
+								}
+							}
+							if (answerLength < j) {
+								for (k=0; index-k > answerLength; k++) {
+									var count = 0;
+									var sum = 0;
+									for (i=k; i < j; i++) {
+										sum = sum + primes[i];
+										count++;
+										if (sum === primes[j]) {
+											if (count > answerLength) {
+												answerLength = count;
+												answerNumber = sum;
+												break;
+											}
+										} 
+										else if (sum > primes[j]) {
+											break;
+										}
+									}
+								}
+							}
+						}
+						return answerNumber;
+					}
+		}
 }
