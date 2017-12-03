@@ -194,6 +194,41 @@ var euler = {
 
 		},
 
+		problem10: {
+			question: "The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17. \n\
+\						Find the sum of all the primes below two million.",
+
+			solve: function (num) {
+						var primes = [2,3,5,7,11,13];
+						var range = num;
+						
+						console.log("Calculating Prime Numbers....");
+						var start = Date.now()
+						for (i=15;i<num;i+=2) {
+							var isPrime = true;
+							var b = Math.ceil(Math.sqrt(i));
+							for (j=0; primes[j] <= b; j++) {
+								if (i % primes[j] === 0) { 
+									isPrime = false; 
+									break; 
+								} 
+							}		
+							if (isPrime) {
+								primes.push(i);
+							}	
+						}
+						console.log("Finished Calculating Prime Numbers");
+
+						var sum = 0;
+						for (var k = 0; k < primes.length; k++) {
+							sum += primes[k];
+						}
+
+						return sum;
+					}
+
+		},
+
 		problem50: {
 			question: "The prime 41, can be written as the sum of six consecutive primes: \n\
 \						41 = 2 + 3 + 5 + 7 + 11 + 13 \n\
@@ -255,5 +290,5 @@ var euler = {
 						}
 						return answerNumber;
 					}
-		}
+		},
 }
