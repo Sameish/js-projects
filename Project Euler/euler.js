@@ -35,6 +35,32 @@ var euler = {
 		problem3: {
 			question: "The prime factors of 13195 are 5, 7, 13 and 29. \n\
 						What is the largest prime factor of the number 600851475143?",
+
+			solve: function(num) {
+						var primes = [2,3,5,7,11,13];
+						var range = num;
+						var sR = Math.ceil(Math.sqrt(range));
+						console.log("Calculating Prime Numbers....");
+						var start = Date.now()
+						for (i=15;i<sR;i+=2) {
+							var isPrime = true;
+							var b = Math.ceil(Math.sqrt(i));
+							for (j=0; primes[j] <= b; j++) {
+								if (i % primes[j] === 0) { 
+									isPrime = false; 
+									break; 
+								} 
+							}		
+							if (isPrime) { primes.push(i); }	
+						}
+						console.log("Finished Calculating Prime Numbers");
+
+						for (k=primes.length-1; k >= 0; k-- ) {
+							if (num % primes[k] === 0) {
+								return primes[k];
+							}
+						}
+					}
 		},
 
 		problem4: {
